@@ -1,0 +1,23 @@
+<div class="container mt-4">
+  <h1 class="text-2xl font-bold mb-4 underline">My Directory List</h1>
+
+  <ul class="space-y-4">
+    <li *ngFor="let item of directoryListings" class="border p-2 rounded-lg">
+      <span class="font-semibold">{{ item.name }}</span>
+
+      <span *ngIf="!item.isDirectory" class="text-xs text-gray-500 ml-2">
+        - File -
+      </span>
+      <span *ngIf="item.isDirectory" class="text-xs text-gray-500 ml-2">
+        - Folder -
+      </span>
+      <span class="text-xs text-gray-500 ml-2">
+        ({{ item.size }} bytes) - [ {{ item.path }} ]
+      </span>
+
+      <p class="text-xs text-gray-500">
+        Created: {{ item.createdDate | date }}
+      </p>
+    </li>
+  </ul>
+</div>
