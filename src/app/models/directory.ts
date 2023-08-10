@@ -4,4 +4,15 @@ export interface DirectoryListItem {
   isDirectory: boolean;
   size: number;
   createdDate: string;
+  permissions: {
+    ownerRead: boolean;
+    ownerWrite: boolean;
+    ownerExecute: boolean;
+    groupRead: boolean;
+    groupWrite: boolean;
+    groupExecute: boolean;
+    othersRead: boolean;
+    othersWrite: boolean;
+    othersExecute: boolean;
+  };
 }

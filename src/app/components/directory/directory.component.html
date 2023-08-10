@@ -1,23 +1,52 @@
-<div class="container mt-4">
-  <h1 class="text-2xl font-bold mb-4 underline">My Directory List</h1>
+<div class="mt-4 flex flex-col items-center">
+  <h1 class="text-2xl center font-semibold mb-4 underline">
+    My Directory List
+  </h1>
 
-  <ul class="space-y-4">
-    <li *ngFor="let item of directoryListings" class="border p-2 rounded-lg">
+  <button
+    *ngIf="isSubDirectory"
+    class="bg-blue-500 hover:bg-blue-700 hover:underline text-white font-bold py-2 px-4 rounded mr-auto ml-4 mb-2"
+    (click)="goBack()"
+  >
+    Back
+  </button>
+
+  <ul class="space-y-4 w-full border rounded p-4 bg-white shadow-lg mx-auto">
+    <li
+      *ngFor="let item of directoryListings"
+      class="flex items-center justify-between border-b border p-4 rounded-lg"
+    >
       <span class="font-semibold">{{ item.name }}</span>
 
       <span *ngIf="!item.isDirectory" class="text-xs text-gray-500 ml-2">
-        - File -
+        File 🗄️
       </span>
       <span *ngIf="item.isDirectory" class="text-xs text-gray-500 ml-2">
-        - Folder -
+        Folder 📁
       </span>
       <span class="text-xs text-gray-500 ml-2">
         ({{ item.size }} bytes) - [ {{ item.path }} ]
       </span>
 
+      <ul class="list-disc pl-6 mt-2">
+        <li *ngIf="item.permissions.ownerRead" class="text-green-400">
+          Owner Read
+        </li>
+        <li *ngIf="item.permissions.ownerWrite" class="text-red-400">
+          Owner Write
+        </li>
+      </ul>
+
       <p class="text-xs text-gray-500">
-        Created: {{ item.createdDate | date }}
+        Created: {{ item.createdDate | date }} 📅
       </p>
+      <button
+        *ngIf="item.isDirectory"
+        class="bg-blue-400 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded hover:underline sm:py-1 sm:px-2 md:py-2 md:px-4"
+        (click)="getDirectoryListings(item.path)"
+      >
+        Select Directory
+      </button>
     </li>
   </ul>
 </div>

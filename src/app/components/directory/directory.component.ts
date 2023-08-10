@@ -9,18 +9,30 @@ import { DirectoryListItem } from '../../models/directory';
 })
 export class DirectoryComponent implements OnInit {
   directoryListings: DirectoryListItem[] = [];
+  isSubDirectory: boolean = false;
 
   constructor(private directoryService: DirectoryService) {}
 
   ngOnInit(): void {
-    this.directoryService.getDirectoryListings().subscribe(
+    this.getDirectoryListings();
+  }
+
+  getDirectoryListings(path?: string): void {
+    this.directoryService.getDirectoryListings(path).subscribe(
       (data: string[]) => {
         this.directoryListings = data.map((item) => JSON.parse(item));
-        console.log('asiphe dir: ', this.directoryListings);
+        if (path) {
+          this.isSubDirectory = true;
+        }
       },
       (error: string) => {
         console.error('Error fetching directory items:', error);
       }
     );
+  }
+
+  goBack(): void {
+    this.getDirectoryListings();
+    this.isSubDirectory = false;
   }
 }
